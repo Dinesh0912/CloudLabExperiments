@@ -1,0 +1,4 @@
+1. Calendar.getInstance().getTimeInMillis() -> return the instantaneous time.
+2. Use above to get startTime and endTime of the program.
+3. Output their difference.
+4. Do the above three stps for ubuntu in virtual box and ubuntu in VMWare

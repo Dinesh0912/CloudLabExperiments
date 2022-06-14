@@ -1,0 +1,102 @@
+1. javac *.java
+2. rmic AdderRemote
+3. rmiregistry 2228
+
+
+
+MyServer.java
+
+import java.rmi.*;
+import java.rmi.registry.*;
+
+public class MyServer {
+
+	public static void main(String[] args) {
+		
+		try {
+			Adder stub = new AdderRemote();
+			Naming.rebind("rmi://localhost:2228/navin", stub);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+}
+
+
+MyClient.java
+
+import java.rmi.Naming;
+import java.util.Scanner;
+
+public class MyClient {
+    public static void main(String[] args) {
+        try {
+            Adder stub = (Adder) Naming.lookup("rmi://172.17.17.176:2228/navin");
+            Scanner s = new Scanner(System.in);
+            System.out.println("Enter number: ");
+            int num1 = s.nextInt();
+            System.out.println("Enter another number: ");
+            int num2 = s.nextInt();
+            System.out.println("1.Add\n2.Subtract\n3.Multiply\n4.Divide\n");
+            int ch = s.nextInt();
+            if (ch == 1) {
+                System.out.println(stub.add(num1, num2));
+            } else if (ch == 2) {
+                System.out.println(stub.subtract(num1, num2));
+            } else if (ch == 3) {
+                System.out.println(stub.multiply(num1, num2));
+            } else if (ch == 4) {
+                System.out.println(stub.divide(num1, num2));
+            } else {
+                System.out.println("Wrong option!");
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+}
+
+
+AdderRemote.java
+
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
+
+public class AdderRemote extends UnicastRemoteObject implements Adder {
+
+    public AdderRemote() throws RemoteException {
+        super();
+    }
+
+    @Override
+    public int add(int x, int y) throws RemoteException {
+        return x + y;
+    }
+
+    @Override
+    public int subtract(int x, int y) throws RemoteException {
+        return x - y;
+    }
+
+    @Override
+    public int multiply(int x, int y) throws RemoteException {
+        return x * y;
+    }
+
+    @Override
+    public int divide(int x, int y) throws RemoteException {
+        return x / y;
+    }
+}
+
+Adder.java
+
+import java.rmi.Remote;
+import java.rmi.RemoteException;
+
+public interface Adder extends Remote {
+    public int add(int x, int y) throws RemoteException;
+    public int subtract(int x, int y) throws RemoteException;
+    public int multiply(int x, int y) throws RemoteException;
+    public int divide(int x, int y) throws RemoteException;
+}

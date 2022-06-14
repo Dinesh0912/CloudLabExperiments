@@ -1,0 +1,29 @@
+1. lsb_release -a
+2. ip a|more
+3. uname -a
+4. sudo su
+5. ps -ef|grep apt
+6. apt-cache search qemu-kvm
+7. apt-get install qemu-kvm
+8. apt-get install bridge-utils
+9. nano /etc/libvirt/libvirtd.conf
+10. Edit the file as below
+
+listen_addr = "0.0.0.0"
+unix_sock_group = "libvirt"
+unix_sock_ro_perms = "0777"
+unix_sock_rw_perms = "0777"
+unix_sock_dir = "/var/run/libvirt"
+auth_unix_ro = "none"
+auth_unix_rw = "none"
+
+11. Restart the libvirtd
+12. /etc/init.d/libvirtd restart
+13. /etc/init.d/libvirtd status
+14. virsh
+virsh# version
+virsh# nodeinfo
+
+15. Click new VM, Launch existing disk image, import existing disk image, 
+provide the path of u downloaded image file give OS type 
+as generic, give name for VM, click finish.

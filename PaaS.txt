@@ -1,0 +1,2 @@
+Step 1: Go to cmd
+Step 2:ssh -i ./firstKeyPair.pem ubuntu@35.175.183.89
